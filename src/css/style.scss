@@ -1,0 +1,509 @@
+$mainColor: linear-gradient(45deg, #64AFC0 0, #35D8B3 100%);
+$mainColor03: #1f806a;
+$mainColor02: #2b8091;
+$gray02: #ccc;
+$gray03: #999;
+$aqua: #00FFFF;
+$breakpointWidth: "", "601px", "993px";
+$breakpoints: "s", "m", "l";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@mixin flex($justify:space-between,$alignItem:center) {
+  display: flex;
+  flex-direction: row;
+  justify-content: $justify;
+  align-items: $alignItem;
+}
+
+@mixin setProperty($item) {
+  @for $i from 1 to 13 {
+    .col-#{$item}-#{$i} {
+      width: (100% / 12) * $i;
+    }
+  }
+}
+
+@each $breakpoint in $breakpoints {
+  @if $breakpoint != "s" {
+    @media (min-width: nth($breakpointWidth, index($breakpoints, $breakpoint))) {
+      @include setProperty($breakpoint)
+    }
+  } @else {
+    @include setProperty($breakpoint)
+  }
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.5rem;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+/*
+===============
+Global Style
+===============
+*/
+
+.main-color {
+  color: $mainColor02;
+}
+
+::placeholder {
+  color: $mainColor02;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: capitalize;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 2.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 0.875rem;
+}
+
+p {
+  font-size: .8rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.2rem;
+  font-weight: 300;
+}
+
+@media screen and (min-width: 800px) {
+  h1 {
+    font-size: 4rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1rem;
+  }
+  body {
+    font-size: 1rem;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1;
+  }
+}
+
+.container {
+  background-color: #89d8d3;
+  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+  height: 100vh;
+  width: 65vw;
+  position: fixed;
+  top: 0;
+  z-index: -2;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 800px;
+  //clip-path: polygon(0 0, 100% 0, 68% 100%, 0% 100%);
+  //border-radius: 25% 11% 19% 0% / 0% 12% 10% 25%;
+}
+
+.container-fluid {
+  width: 100%;
+  margin: auto;
+  @media screen and (min-width: 800px) {
+    width: 90%;
+  }
+}
+
+.flex {
+  @include flex()
+}
+
+/*
+===============
+Navbar
+===============
+*/
+#header {
+  width: 100%;
+  display: grid;
+  padding: 3rem 0 1rem;
+
+  nav {
+    @include flex();
+  }
+}
+
+.nav-header {
+  @include flex();
+
+  .nav-title {
+    font-weight: 300;
+    margin-right: 1rem;
+  }
+
+  .icon-diamond {
+    margin-top: -7px;
+  }
+
+}
+
+.searchbar-container {
+  @include flex();
+
+  .searchbar {
+    border: 1px solid $gray02;
+    min-height: 30px;
+    background-color: transparent;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 4px 15px;
+    margin-right: 1.7rem;
+  }
+
+  .icon {
+    color: $mainColor02;
+    cursor: pointer;
+  }
+
+  .icon-bag {
+    font-size: 1.7rem;
+    @extend .icon
+  }
+
+}
+
+.shoppingCount {
+  background-color: crimson;
+  font-weight: 500;
+  font-size: .7rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: white;
+  @include flex(center);
+  position: absolute;
+  top: -9px;
+  right: -9px;
+}
+
+/*
+===============
+Product
+===============
+*/
+.product {
+  @include flex();
+  height: 145px;
+  max-width: 100%;
+  width: 320px;
+  box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+  padding: 45px 30px;
+  position: relative;
+  background: transparent;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: linear .5s;
+  cursor: pointer;
+  overflow: hidden;
+  transform: scaleX(1);
+  transform-origin: right;
+
+  &:not(&:first-child) {
+    margin: 3em 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-image: $mainColor;
+    border: 1px solid $mainColor;
+    transition: .3s ease;
+  }
+
+  &:hover {
+    box-shadow: 9px 9px 16px transparent, -9px -9px 16px transparent;
+    transform: scaleX(1.1);
+
+    & * {
+      color: white;
+      transition: .3s;
+    }
+
+    &::before {
+      left: 0;
+      z-index: -1;
+    }
+  }
+
+  &-title {
+    color: $mainColor02;
+    text-transform: capitalize;
+  }
+
+  &-subtitle {
+    color: #999;
+    text-transform: capitalize;
+  }
+
+  &-img {
+    width: 70px;
+    position: relative;
+    background-color: red;
+    align-self: start;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.icon-plus {
+  color: $mainColor02;
+  font-size: 1.6rem;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+/*
+===============
+Best Seller
+===============
+*/
+
+.btn-minus {
+  -webkit-box-shadow: -2px 7px 9px -2px rgba(228, 228, 228, 0.95);
+  -moz-box-shadow: -2px 7px 9px -2px rgba(228, 228, 228, 0.95);
+  box-shadow: -2px 7px 9px -2px rgba(228, 228, 228, 0.95);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  outline: none;
+  @extend .flex;
+  justify-content: center;
+}
+
+.product-seller-container {
+  width: 280px;
+  border-radius: 25px;
+
+  &:nth-of-type(1) {
+    margin-right: 1rem;
+  }
+
+  &:nth-of-type(2) {
+    transform: scale(.9);
+  }
+
+  background-color: #ffffff;
+  overflow: hidden;
+
+  .product-seller-img {
+    max-height: 260px;
+    object-fit: cover;
+  }
+
+  img {
+    width: 100%;
+    transform: scale(.6);
+    background-color: red;
+  }
+
+  .product-seller-info {
+    border-top-right-radius: 45px;
+    border-top-left-radius: 45px;
+    background-image: $mainColor;
+    color: #fff;
+    padding: 1.7rem 1.5rem;
+    position: relative;
+    box-shadow: -9px -9px 16px rgb(163, 177, 198, 0.6), 9px 9px 16px rgba(255, 255, 255, 0.5);
+  }
+
+  .product-seller--subtitle {
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .icon-seller-plus {
+    @extend .icon-plus;
+    color: $mainColor02;
+    bottom: 8%;
+    right: 8%;
+  }
+}
+
+.icon-minus {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: $mainColor02;
+}
+
+/*
+===============
+Pagination
+===============
+*/
+
+.pagination {
+  text-align: center;
+
+  li {
+    display: inline;
+
+    a {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+
+      &.active {
+        background-color: $mainColor02;
+        color: #fff
+      }
+
+      &:hover:not(.active) {
+        background-color: #ddd;
+      }
+    }
+  }
+}
+
+/*
+===============
+SideBar
+===============
+*/
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -40%;
+  width: 20vw;
+  height: 100vh;
+  z-index: 1000;
+  transition: .5s linear;
+  box-shadow: 1px 1px 7px $gray02;
+  background-color: #fff;
+  padding: 4rem 2rem;
+
+  .cart {
+    margin: 1rem 0;
+  }
+
+  * {
+    color: #222;
+  }
+
+  &.show {
+    left: 0;
+  }
+}
+
+.delete-btn {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  background-color: lighten($mainColor02, 20%);
+  line-height: 29px;
+  color: #222;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+
+  &:after {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: darken($mainColor02, 5%);
+    transform: scale3d(0, 1, 1);
+    transform-origin: left;
+    transition: transform .3s;
+  }
+
+  &:hover:after {
+    transform: scale3d(1, 1, 1);
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
